@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: cadetblue;
+      overflow: hidden;
+    }
+
+    .infinite {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: #525252;
+      transform-origin: bottom;
+      border-top: 20px solid white;
+      border-bottom: 20px solid white;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      /* Dikey düzenleme */
+      justify-content: space-between
+    }
+
+    .infinite .whiteLine {
+      content: '';
+      transform: translateX(-50%);
+      left: 0;
+
+      width: 200%;
+      height: 10px;
+      background: linear-gradient(90deg, #fff 0%, #fff 70%, #525252 70%, #525252 100%);
+      background-size: 120px;
+      animation: animate 1s linear infinite;
+    }
+
+
+
+    @keyframes animate {
+      0% {
+        background-position: 0px;
+      }
+
+      100% {
+        background-position: -120px;
+      }
+    }
+
+
+    .myCar {
+      position: absolute;
+      z-index: 100;
+      width: 200px;
+      text-align: center;
+    }
+
+    .car {
+      position: absolute;
+    }
+
+    .animation {
+      -webkit-transition: all 100ms ease-in-out;
+      -moz-transition: all 100ms ease-in-out;
+      -o-transition: all 100ms ease-in-out;
+      transition: all 100ms ease-in-out;
+    }
+
+    .point {
+      position: absolute;
+      top: 0;
+      right: 10%;
+      background-color: #ffffff7a;
+      width: 100px;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="infinite">
+    <div id="point" class="point"> 0 </div>
+    <div></div>
+    <div class="whiteLine"></div>
+    <div class="whiteLine"></div>
+    <div id="mycar1" car_name="Araç 1" is_car="true" style="bottom: 41%;left: 5%;" class="animation myCar">
+      <img src="/white.png" height="140" width="200" alt="">
+    </div>
+    <div id="mycar2" car_name="Araç 2" is_car="true" style="bottom: 76%;left: 5%;" class="animation myCar">
+      <img src="/white.png" height="140" width="200" alt="">
+
+    </div>
+    <div class="otherCars" id="ways">
+    </div>
+  </div>
+</body>
+
+<script>
+
+  var speedMyCar1 = 1;
+  var speedMyCar2 = 1;
+  var speed = 1;
+  var point = 0;
+  var carPositionMYCAR1Left = 5;
+  var carPositionMYCAR2Left = 5;
+
+  var carPositionMYCAR1Bottom = 41;
+  var carPositionMYCAR2Bottom = 76;
+
+
+  function reset(message = null) {
+    carPositionMYCAR1Left = 5;
+    carPositionMYCAR2Left = 5;
+    carPositionMYCAR1Bottom = 41;
+    carPositionMYCAR2Bottom = 76;
+    speedMyCar1 = 1;
+    speedMyCar2 = 1;
+    speed = 1;
+    window.document.getElementById('mycar1').style.left = '5%';
+    window.document.getElementById('mycar2').style.left = '5%';
+
+    window.document.getElementById('mycar1').style.bottom = '41%';
+    window.document.getElementById('mycar2').style.bottom = '76%';
+
+    // window.document.getElementById('mycar1').textContent = (speed * 3 + 'KMH Mycar1')
+    // window.document.getElementById('mycar2').textContent = (speed * 3 + 'KMH Mycar2')
+    document.querySelectorAll('.whiteLine').forEach(element => {
+      element.style.animationDuration = 1 / speed + "s";
+    });
+
+    window.document.getElementById('point').innerHTML = 0;
+    point = 0;
+
+
+    window.document.getElementById('ways').innerHTML = "";
+    if (message)
+      setTimeout(() => {
+
+        alert(message);
+      }, 200);
+  }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowUp') {
+      if (speedMyCar1 == 30) return
+      speedMyCar1++;
+      carPositionMYCAR1Left++;
+    }
+    if (event.key === 'ArrowDown') {
+      if (speedMyCar1 == 1) return
+      speedMyCar1--;
+      carPositionMYCAR1Left--;
+    }
+    if (event.key === 'w' || event.key === 'W') {
+      if (speedMyCar2 == 30) return
+      speedMyCar2++;
+      carPositionMYCAR2Left++;
+    }
+    if (event.key === 's' || event.key === 'S') {
+      if (speedMyCar2 == 1) return
+      speedMyCar2--;
+      carPositionMYCAR2Left--;
+    }
+
+    speed = (speedMyCar1 + speedMyCar2) / 2
+
+    if (event.key === 'ArrowRight') {
+      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom - 1 * 5;
+    }
+    if (event.key === 'ArrowLeft') {
+      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom + 1 * 5;
+    }
+
+    if (event.key === 'd' || event.key === 'D') {
+      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom - 1 * 5;
+    }
+    if (event.key === 'a' || event.key === 'A') {
+      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom + 1 * 5;
+    }
+
+    if (speed < 1) speed = 1;
+    if (speed > 30) speed = 30;
+    if (carPositionMYCAR1Bottom < 0) carPositionMYCAR1Bottom = 0
+    if (carPositionMYCAR1Bottom > 90) carPositionMYCAR1Bottom = 90
+
+    if (carPositionMYCAR2Bottom < 0) carPositionMYCAR2Bottom = 0
+    if (carPositionMYCAR2Bottom > 90) carPositionMYCAR2Bottom = 90
+
+    window.document.getElementById('mycar1').style.left = carPositionMYCAR1Left + '%';
+    window.document.getElementById('mycar2').style.left = carPositionMYCAR2Left + '%';
+
+    window.document.getElementById('mycar1').style.bottom = carPositionMYCAR1Bottom + '%';
+    window.document.getElementById('mycar2').style.bottom = carPositionMYCAR2Bottom + '%';
+
+    // window.document.getElementById('mycar1').textContent = (speed * 3 + 'KMH Mycar1')
+    // window.document.getElementById('mycar2').textContent = (speed * 3 + 'KMH Mycar2')
+    document.querySelectorAll('.whiteLine').forEach(element => {
+      element.style.animationDuration = 1 / speed + "s";
+    });
+  });
+
+  var cars = [];
+  function checkCarCollisions() {
+    cars = document.querySelectorAll('[is_car="true"]');
+    for (let i = 0; i < cars.length; i++) {
+      for (let j = i + 1; j < cars.length; j++) {
+        car1 = cars[i];
+        car2 = cars[j];
+
+        const rect1 = car1.getBoundingClientRect();
+        const rect2 = car2.getBoundingClientRect();
+
+        if (
+          rect1.bottom > rect2.top &&
+          rect1.top < rect2.bottom &&
+          rect1.right > rect2.left &&
+          rect1.left < rect2.right
+        ) {
+          reset(car1.getAttribute('car_name') + ' ile ' + car2.getAttribute('car_name') + '  Çarpıştı!! Puan = ' + point);
+        }
+      }
+    }
+  }
+  setInterval(checkCarCollisions, 100);
+
+  function randomCarView() {
+    var rows = [
+      "41",
+      "76",
+      "10",
+    ];
+    var row = rows[Math.floor(Math.random() * rows.length)];
+
+    var randomID = (Math.random() * 1000).toFixed();
+
+    window.document.getElementById('ways').innerHTML += `<div car_name="Yoldan Geçen Araç" id="${randomID}" class="animation car" style="bottom: ${row}%; right: -25%;" is_car="true"><img src="/red.png" height="140" width="200" alt=""></div> `;
+    moveCar(randomID, -25);
+
+    setTimeout(() => {
+      randomCarView()
+    }, (5000));
+
+
+  }
+  randomCarView()
+
+  function moveCar(id, right) {
+    element = window.document.getElementById(id);
+    if (!element) return;
+    if (right > 150) {
+      point++;
+      window.document.getElementById('point').innerHTML = point;
+      element.remove();
+      return;
+    }
+    element.style.right = right + '%';
+    setTimeout(() => {
+      moveCar(id, right + 1)
+    }, 100 / speed);
+  }
+
+
+</script>
+
+</html>
