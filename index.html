@@ -60,7 +60,6 @@
     .myCar {
       position: absolute;
       z-index: 100;
-      width: 200px;
       text-align: center;
     }
 
@@ -94,10 +93,10 @@
     <div class="whiteLine"></div>
     <div class="whiteLine"></div>
     <div id="mycar1" car_name="Araç 1" is_car="true" style="bottom: 41%;left: 5%;" class="animation myCar">
-      <img src="/white.png" height="140" width="200" alt="">
+      <img src="/white.png" width="250" alt="">
     </div>
     <div id="mycar2" car_name="Araç 2" is_car="true" style="bottom: 76%;left: 5%;" class="animation myCar">
-      <img src="/white.png" height="140" width="200" alt="">
+      <img src="/white.png" width="250" alt="">
 
     </div>
     <div class="otherCars" id="ways">
@@ -175,17 +174,17 @@
     speed = (speedMyCar1 + speedMyCar2) / 2
 
     if (event.key === 'ArrowRight') {
-      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom - 1 * 5;
+      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom - 1 * 10;
     }
     if (event.key === 'ArrowLeft') {
-      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom + 1 * 5;
+      carPositionMYCAR1Bottom = carPositionMYCAR1Bottom + 1 * 10;
     }
 
     if (event.key === 'd' || event.key === 'D') {
-      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom - 1 * 5;
+      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom - 1 * 10;
     }
     if (event.key === 'a' || event.key === 'A') {
-      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom + 1 * 5;
+      carPositionMYCAR2Bottom = carPositionMYCAR2Bottom + 1 * 10;
     }
 
     if (speed < 1) speed = 1;
@@ -243,7 +242,7 @@
 
     var randomID = (Math.random() * 1000).toFixed();
 
-    window.document.getElementById('ways').innerHTML += `<div car_name="Yoldan Geçen Araç" id="${randomID}" class="animation car" style="bottom: ${row}%; right: -25%;" is_car="true"><img src="/red.png" height="140" width="200" alt=""></div> `;
+    window.document.getElementById('ways').innerHTML += `<div car_name="Yoldan Geçen Araç" id="${randomID}" class="animation car" style="bottom: ${row}%; right: -25%;" is_car="true"><img src="/red.png" width="250" alt=""></div> `;
     moveCar(randomID, -25);
 
     setTimeout(() => {
